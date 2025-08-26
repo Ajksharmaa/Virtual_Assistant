@@ -1,11 +1,13 @@
 import speech_recognition as aj
-import pyttsx3
-import pywhatkit
+#import pyttsx3
+#import pywhatkit
 import datetime
 import wikipedia
 import webbrowser
+import platform
 #import smtplib
 from flask import Flask, render_template, request, jsonify
+
 
 app = Flask(__name__)
 @app.route("/")
@@ -15,13 +17,12 @@ def home():
 
 listener = aj.Recognizer()
 
-machine =pyttsx3.init('sapi5')
-voices=machine.getProperty('voices')
-machine.setProperty('voice',voices[1].id)
 
-def talk(text):
-    machine.say(text)
-    machine.runAndWait()
+
+
+#def talk(text):
+ #   machine.say(text)
+  #  machine.runAndWait()
 
 @app.route("/init", methods=["GET"])
 def init():
@@ -60,7 +61,7 @@ def play_jarvis():
         song =instruction.replace("play","")
         response="playing" + song
         #talk(response)
-        pywhatkit.playonyt(song)
+        webbrowser.open(f"https://www.youtube.com/results?search_query={song}")
 
     elif "time" in instruction:
         time=datetime.datetime.now().strftime('%H:%M:%S')
@@ -124,5 +125,5 @@ if __name__ == "__main__":
     with app.app_context():
         print("Jarvis Flask Backend is running...")
         
-        app.run(debug=True)
+        #app.run(host="0.0.0.0", port=5000, debug=True)
 
